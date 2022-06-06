@@ -5,7 +5,7 @@ const logger = Logger.create('config');
 const options = {
     log_level: {
         desc: 'Level of data to log',
-        default: 'INFO',
+        default: 'DEBUG',
         validators: [
             x =>
                 Object.values(Logger.LogLevels).includes(x) ||
