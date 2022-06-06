@@ -173,7 +173,12 @@ class Job {
                 (timeout >= 0 &&
                     set_timeout(async _ => {
                         this.logger.info(`Timeout exceeded timeout=${timeout}`);
-                        process.kill(proc.pid, 'SIGKILL');
+                        try {
+                            process.kill(proc.pid, 'SIGKILL');
+                        } catch (e) {
+                            this.logger.error(`Failed to kill process: ${e}`);
+                            resolve({ stdout, stderr, code: null, signal: "SIGKILL", output });
+                        }
                     }, timeout)) ||
                 null;
 
